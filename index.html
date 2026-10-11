@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almacenes Guerrero | Catálogo & Tienda Virtual La Maná</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            600: '#1d4ed8',
+                            700: '#1e40af',
+                            800: '#1e3a8a',
+                            900: '#0f172a',
+                        },
+                        accent: {
+                            500: '#f97316',
+                            600: '#ea580c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-full font-sans text-slate-800 antialiased selection:bg-brand-600 selection:text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-brand-900 via-brand-800 to-brand-900 text-white text-xs py-2 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1 bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full text-[11px] font-medium border border-emerald-500/30">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    Abierto HOY en La Maná
+                </span>
+                <span class="hidden md:inline text-slate-300">| Av. 19 de Mayo y San Pablo (Ecuador)</span>
+            </div>
+            <div class="flex items-center gap-4 text-slate-200">
+                <a href="tel:+593900000000" class="hover:text-amber-400 transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-phone text-xs"></i> Convencional / Ventas
+                </a>
+                <button onclick="toggleExecutiveModal()" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 hover:text-amber-200 px-2.5 py-0.5 rounded text-xs transition border border-amber-500/40 flex items-center gap-1.5 font-medium">
+                    <i class="fa-solid fa-briefcase"></i>
+                    <span>Ver Propuesta Técnica</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+            <div class="flex items-center justify-between gap-4">
+                
+                <!-- Logo & Branding -->
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 bg-gradient-to-br from-brand-700 to-brand-900 text-white rounded-xl flex items-center justify-center font-black text-2xl shadow-md shadow-brand-900/20 tracking-tighter">
+                        AG
+                    </div>
+                    <div>
+                        <a href="#" class="text-xl sm:text-2xl font-black tracking-tight text-brand-900 leading-none block">
+                            ALMACENES <span class="text-accent-500">GUERRERO</span>
+                        </a>
+                        <span class="text-xs font-semibold text-slate-500 tracking-wide uppercase">La Maná • Cotopaxi</span>
+                    </div>
+                </div>
+
+                <!-- Search Bar (Desktop) -->
+                <div class="hidden md:flex flex-1 max-w-md mx-6 relative">
+                    <div class="relative w-full">
+                        <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Buscar motos, refrigeradoras, TV 4K, laptops..." class="w-full pl-10 pr-4 py-2.5 bg-slate-100 hover:bg-slate-100/80 focus:bg-white border border-slate-200 focus:border-brand-600 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-600/20 transition-all">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-400 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <!-- Admin Login Button Added Here -->
+                    <button onclick="openAdminLoginModal()" class="p-2 sm:px-3 sm:py-2 bg-slate-900 text-amber-400 hover:bg-slate-800 rounded-xl transition flex items-center gap-2 border border-slate-700 shadow-sm" title="Panel Administrador">
+                        <i class="fa-solid fa-lock text-sm"></i>
+                        <span class="hidden sm:inline font-bold text-xs">Admin</span>
+                    </button>
+
+                    <!-- Calculator Trigger Button -->
+                    <button onclick="toggleCreditModal()" class="p-2 sm:px-3 sm:py-2 text-slate-700 hover:text-brand-700 hover:bg-brand-50 rounded-xl transition flex items-center gap-2 border border-slate-200 hover:border-brand-200" title="Simular Crédito">
+                        <i class="fa-solid fa-calculator text-brand-600 text-lg"></i>
+                        <span class="hidden sm:inline font-semibold text-xs text-slate-700">Simulador de Crédito</span>
+                    </button>
+
+                    <!-- Cart Trigger Button -->
+                    <button onclick="toggleCartModal()" class="relative p-2.5 sm:px-4 sm:py-2 bg-brand-700 hover:bg-brand-800 text-white rounded-xl transition flex items-center gap-2 shadow-md shadow-brand-700/20">
+                        <i class="fa-solid fa-cart-shopping text-base"></i>
+                        <span class="hidden sm:inline font-bold text-xs">Carrito</span>
+                        <span id="cartCount" class="bg-accent-500 text-white font-extrabold text-[11px] px-1.5 py-0.5 rounded-full min-w-[20px] text-center border-2 border-brand-700">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Search Bar -->
+            <div class="mt-3 md:hidden relative">
+                <input type="text" id="mobileSearchInput" onkeyup="syncAndFilterMobile(this.value)" placeholder="Buscar en Almacenes Guerrero..." class="w-full pl-10 pr-4 py-2 bg-slate-100 border border-slate-200 focus:border-brand-600 rounded-xl text-sm focus:outline-none">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+            </div>
+        </div>
+
+        <!-- Filter Categories Bar -->
+        <div class="bg-slate-50 border-t border-slate-200/80 px-4 py-2 overflow-x-auto no-scrollbar">
+            <div class="max-w-7xl mx-auto flex items-center gap-2 min-w-max text-xs font-medium" id="categoryFilters">
+                <button onclick="setCategory('all')" class="category-btn active bg-brand-700 text-white px-3.5 py-1.5 rounded-lg shadow-sm transition">
+                    <i class="fa-solid fa-layer-group mr-1.5"></i>Todos los Productos
+                </button>
+                <button onclick="setCategory('motos')" class="category-btn bg-white hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-lg border border-slate-200 transition">
+                    <i class="fa-solid fa-motorcycle mr-1.5 text-slate-500"></i>Motos y Movilidad
+                </button>
+                <button onclick="setCategory('linea-blanca')" class="category-btn bg-white hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-lg border border-slate-200 transition">
+                    <i class="fa-solid fa-snowflake mr-1.5 text-slate-500"></i>Línea Blanca
+                </button>
+                <button onclick="setCategory('tecnologia')" class="category-btn bg-white hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-lg border border-slate-200 transition">
+                    <i class="fa-solid fa-tv mr-1.5 text-slate-500"></i>Tecnología y TV
+                </button>
+                <button onclick="setCategory('hogar')" class="category-btn bg-white hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-lg border border-slate-200 transition">
+                    <i class="fa-solid fa-couch mr-1.5 text-slate-500"></i>Audio y Hogar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="bg-gradient-to-br from-brand-900 via-brand-800 to-slate-900 text-white py-10 px-4 relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-1/2 h-full bg-accent-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 items-center relative z-10">
+            <div class="md:col-span-7 space-y-4">
+                <div class="inline-flex items-center gap-2 bg-accent-500/20 text-accent-500 border border-accent-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+                    <i class="fa-solid fa-bolt"></i> Crédito Directo Inmediato
+                </div>
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+                    Equipa tu hogar en La Maná con <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-accent-500">facilidades de pago</span>
+                </h1>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl">
+                    Lévate tu moto, electrodoméstico o Smart TV sin papeleos complejos. Aprobación rápida presentando tu cédula de ciudadanía.
+                </p>
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <a href="#catalogo" class="bg-accent-500 hover:bg-accent-600 text-white font-bold px-6 py-3 rounded-xl transition shadow-lg shadow-accent-500/30 inline-flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-bag-shopping"></i> Explorar Catálogo
+                    </a>
+                    <button onclick="toggleCreditModal()" class="bg-white/10 hover:bg-white/20 text-white font-semibold px-5 py-3 rounded-xl backdrop-blur transition border border-white/20 text-sm inline-flex items-center gap-2">
+                        <i class="fa-solid fa-calculator"></i> Calcular Cuota
+                    </button>
+                </div>
+            </div>
+            <div class="md:col-span-5 hidden md:block">
+                <!-- Trust Card Banner -->
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 text-slate-100 shadow-2xl">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-amber-400"></i> Beneficios Almacenes Guerrero
+                    </h3>
+                    <ul class="space-y-3 text-xs sm:text-sm">
+                        <li class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-check"></i></div>
+                            <span>Entrega y armado gratis en La Maná y El Carmen</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-check"></i></div>
+                            <span>Garantía oficial de fábrica por 12 a 36 meses</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs"><i class="fa-solid fa-check"></i></div>
+                            <span>Primer mantenimiento de moto gratis en nuestro taller</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full" id="catalogo">
+        <div class="flex justify-between items-end mb-6">
+            <div>
+                <h2 class="text-2xl font-black text-slate-900 tracking-tight">Catálogo de Productos</h2>
+                <p class="text-xs sm:text-sm text-slate-500">Precios actualizados para Ecuador con opción de crédito directo</p>
+            </div>
+            <div id="productCounter" class="text-xs font-semibold bg-slate-200 text-slate-700 px-3 py-1 rounded-full">
+                Mostrando 6 productos
+            </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="productGrid">
+            <!-- Dynamic JS Injected Cards -->
+        </div>
+
+        <!-- Empty State (Hidden by default) -->
+        <div id="emptyState" class="hidden text-center py-16 bg-white rounded-2xl border border-slate-200 my-6">
+            <i class="fa-solid fa-box-open text-5xl text-slate-300 mb-3"></i>
+            <h3 class="text-lg font-bold text-slate-700">No encontramos productos</h3>
+            <p class="text-xs text-slate-500 max-w-sm mx-auto mt-1">Intenta ajustando tu búsqueda o selecciona otra categoría.</p>
+            <button onclick="resetFilters()" class="mt-4 bg-brand-700 text-white text-xs font-semibold px-4 py-2 rounded-lg hover:bg-brand-800 transition">
+                Restablecer Filtros
+            </button>
+        </div>
+    </main>
+
+    <!-- Manager Demo Alert Banner -->
+    <section class="bg-amber-50 border-y border-amber-200 py-6 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-amber-500 text-white rounded-xl flex items-center justify-center text-xl flex-shrink-0 shadow-md shadow-amber-500/20">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-amber-950 text-sm sm:text-base">¿Eres Administrador o Propietario de Almacenes Guerrero?</h4>
+                    <p class="text-xs text-amber-800">Este prototipo web interactivo ha sido desarrollado por un Ingeniero en Sistemas postulante para optimizar las ventas digitales de la empresa en La Maná.</p>
+                </div>
+            </div>
+            <button onclick="toggleExecutiveModal()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition flex-shrink-0 shadow-sm flex items-center gap-2">
+                <i class="fa-solid fa-file-contract"></i> Ver Proyecto Técnico Completo
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-900 text-slate-400 text-xs py-12 px-4 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <h3 class="text-white font-bold text-base mb-3">Almacenes Guerrero</h3>
+                <p class="leading-relaxed text-slate-400">
+                    Tu tienda aliada en el cantón La Maná y la provincia de Cotopaxi. Electrodomésticos, tecnología y motos al alcance de todos.
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-3">Atención al Cliente</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:text-amber-400 transition">Solicitar Crédito Directo</a></li>
+                    <li><a href="#" class="hover:text-amber-400 transition">Preguntas Frecuentes</a></li>
+                    <li><a href="#" class="hover:text-amber-400 transition">Garantías y Soporte Técnico</a></li>
+                    <li><a href="#" class="hover:text-amber-400 transition">Sectores de Entrega (Moraspungo, Pucayacu)</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-3">Ubicación & Contacto</h4>
+                <p class="mb-2"><i class="fa-solid fa-location-dot text-amber-400 mr-2"></i>La Maná, Cotopaxi - Ecuador</p>
+                <p class="mb-2"><i class="fa-solid fa-phone text-amber-400 mr-2"></i>+593 90 000 0000</p>
+                <p><i class="fa-solid fa-envelope text-amber-400 mr-2"></i>ventas@almacenesguerrero.ec</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-3">Desarrollo Tecnológico</h4>
+                <div class="p-3 bg-slate-800/80 rounded-xl border border-slate-700">
+                    <p class="text-slate-300 font-medium mb-1">E-Commerce Ready 2026</p>
+                    <p class="text-[11px] text-slate-400">Plataforma optimizada para alta velocidad, dispositivos móviles e integración directa con WhatsApp Business.</p>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto pt-6 border-t border-slate-800 text-center flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>© 2026 Almacenes Guerrero. Todos los derechos reservados.</p>
+            <p class="text-slate-500">Diseñado con excelencia técnica para La Maná, Cotopaxi.</p>
+        </div>
+    </footer>
+
+
+    <!-- MODAL 1: Credit Calculator -->
+    <div id="creditModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden border border-slate-100 animate-in fade-in zoom-in duration-200">
+            <div class="bg-brand-900 text-white px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-calculator text-amber-400 text-lg"></i>
+                    <h3 class="font-bold text-base">Simulador de Crédito Directo</h3>
+                </div>
+                <button onclick="toggleCreditModal()" class="text-slate-300 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 space-y-5">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Seleccionar Producto</label>
+                    <select id="simProductSelect" onchange="calculateInstallment()" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <!-- Dynamic populated -->
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Entrada Inicial ($)</label>
+                        <input type="number" id="simDownPayment" value="0" min="0" oninput="calculateInstallment()" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Plazo de Pago</label>
+                        <select id="simMonths" onchange="calculateInstallment()" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                            <option value="3">3 Meses</option>
+                            <option value="6">6 Meses</option>
+                            <option value="12" selected>12 Meses</option>
+                            <option value="18">18 Meses</option>
+                            <option value="24">24 Meses</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Simulation Output Box -->
+                <div class="bg-brand-50 border border-brand-200 rounded-xl p-4 text-center">
+                    <span class="text-xs text-brand-700 font-bold uppercase tracking-wider block mb-1">Cuota Mensual Estimada</span>
+                    <div class="text-3xl font-black text-brand-900" id="simMonthlyResult">$0.00 / mes</div>
+                    <p class="text-[11px] text-slate-500 mt-2">Financiamiento sujeto a aprobación rápida con cédula en nuestro local de La Maná.</p>
+                </div>
+
+                <div class="flex gap-3">
+                    <button onclick="toggleCreditModal()" class="w-1/2 py-2.5 border border-slate-300 text-slate-700 font-bold rounded-xl text-xs hover:bg-slate-100 transition">Cerrar</button>
+                    <button onclick="requestCreditViaWhatsApp()" class="w-1/2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs py-2.5 transition flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-sm"></i> Aplicar por WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: Shopping Cart -->
+    <div id="cartModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-end hidden">
+        <div class="bg-white h-full max-w-md w-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-200">
+            <div class="bg-brand-900 text-white p-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping text-accent-500"></i>
+                    <h3 class="font-bold text-base">Tu Carrito de Compras</h3>
+                </div>
+                <button onclick="toggleCartModal()" class="text-slate-300 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="flex-grow overflow-y-auto p-4 space-y-4" id="cartItemsContainer">
+                <!-- Cart items JS injected -->
+            </div>
+
+            <div class="p-4 border-t border-slate-200 bg-slate-50 space-y-3">
+                <div class="flex justify-between text-slate-600 text-sm">
+                    <span>Subtotal Estimado:</span>
+                    <span font-bold id="cartSubtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between text-slate-900 font-extrabold text-base pt-1 border-t border-slate-200">
+                    <span>Total de Pedido:</span>
+                    <span class="text-brand-700 text-lg" id="cartTotal">$0.00</span>
+                </div>
+
+                <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-md shadow-emerald-600/20">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Finalizar Pedido por WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: Executive Technical Proposal (For Store Owners) -->
+    <div id="executiveModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-100">
+            <div class="bg-gradient-to-r from-brand-900 to-brand-800 text-white p-5 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-500 text-white rounded-lg flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base leading-tight">Propuesta Técnica de Sistema Web</h3>
+                        <p class="text-xs text-amber-300">Presentado por Aspirante a Ingeniero en Sistemas</p>
+                    </div>
+                </div>
+                <button onclick="toggleExecutiveModal()" class="text-slate-300 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 text-slate-700 text-xs sm:text-sm">
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                    <h4 class="font-bold text-amber-900 mb-1 flex items-center gap-2 text-sm">
+                        <i class="fa-solid fa-bullseye text-amber-600"></i> Objetivos Estratégicos para Almacenes Guerrero
+                    </h4>
+                    <p class="text-slate-600 leading-relaxed">
+                        Esta solución busca modernizar la comercialización en La Maná, reduciendo la dependencia de la venta física tradicional y capturando clientes de cantones cercanos (Valencia, El Carmen, Pucayacu) a través de canales digitales.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 text-base mb-3 border-b pb-1">Pilares Técnicos Desarrollados:</h4>
+                    <div class="grid sm:grid-cols-2 gap-3">
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                            <span class="font-bold text-brand-700 block mb-1">1. Mobile First & Carga Ultra-Rápida</span>
+                            <p class="text-xs text-slate-600">Optimizado para redes móviles 4G en zonas rurales de Cotopaxi. Pesa menos de 1MB y responde al instante.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                            <span class="font-bold text-brand-700 block mb-1">2. Embudo de Venta Directa a WhatsApp</span>
+                            <p class="text-xs text-slate-600">Transforma visitantes en chats inmediatos con vendedores con mensajes prediseñados y detallados.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                            <span class="font-bold text-brand-700 block mb-1">3. Simulador de Crédito Directo</span>
+                            <p class="text-xs text-slate-600">Calculadora dinámica interactiva que incentiva al cliente a consultar facilidades de pago.</p>
+                        </div>
+                        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl">
+                            <span class="font-bold text-brand-700 block mb-1">4. Escalabilidad e Integración ERP</span>
+                            <p class="text-xs text-slate-600">Preparado para conectarse con bases de datos MySQL/PostgreSQL y sistemas de inventario futuros.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t pt-4">
+                    <h4 class="font-bold text-slate-900 mb-2">Siguientes Pasos de Implementación Recomendados:</h4>
+                    <ul class="list-disc pl-5 space-y-1 text-slate-600 text-xs">
+                        <li>Dominio propio (`almacenesguerrero.ec` o `.com`).</li>
+                        <li>Integración de catálogo con la API de WhatsApp Business oficial.</li>
+                        <li>Panel Administrativo para subir/actualizar productos sin saber programación.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="p-4 bg-slate-100 border-t flex justify-end">
+                <button onclick="toggleExecutiveModal()" class="bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition">
+                    Entendido / Volver al Demo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: Admin Login Modal -->
+    <div id="adminLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl overflow-hidden border border-slate-100 animate-in fade-in zoom-in duration-200">
+            <div class="bg-slate-900 text-white px-6 py-4 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-lock text-amber-400 text-lg"></i>
+                    <h3 class="font-bold text-base">Acceso Administrador</h3>
+                </div>
+                <button onclick="toggleAdminLoginModal()" class="text-slate-300 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Usuario</label>
+                    <input type="text" id="adminUser" placeholder="Ingrese usuario" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Contraseña</label>
+                    <input type="password" id="adminPass" placeholder="Ingrese clave" class="w-full bg-slate-100 border border-slate-300 rounded-xl p-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-600">
+                </div>
+                <div id="loginError" class="text-xs text-red-600 font-semibold hidden">Usuario o contraseña incorrectos.</div>
+                <div class="flex gap-3 pt-2">
+                    <button onclick="toggleAdminLoginModal()" class="w-1/2 py-2.5 border border-slate-300 text-slate-700 font-bold rounded-xl text-xs hover:bg-slate-100 transition">Cancelar</button>
+                    <button onclick="verifyAdminLogin()" class="w-1/2 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs py-2.5 transition">Ingresar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: Admin Dashboard Modal (Add Products & Categories) -->
+    <div id="adminDashboardModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-100">
+            <div class="bg-gradient-to-r from-slate-900 to-brand-900 text-white p-5 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-amber-500 text-white rounded-lg flex items-center justify-center text-lg font-bold">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base leading-tight">Panel de Control Gerencial</h3>
+                        <p class="text-xs text-amber-300">Gestión de Inventario y Categorías - Almacenes Guerrero</p>
+                    </div>
+                </div>
+                <button onclick="toggleAdminDashboard()" class="text-slate-300 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-6 text-slate-700 text-xs sm:text-sm">
+                <!-- Add Category Form Section -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                    <h4 class="font-bold text-slate-900 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-folder-plus text-brand-600"></i> Agregar Nueva Categoría
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <input type="text" id="newCatId" placeholder="ID (ej: herramientas)" class="bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <input type="text" id="newCatName" placeholder="Nombre (ej: Herramientas)" class="bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        <button onclick="addNewCategory()" class="bg-brand-700 hover:bg-brand-800 text-white font-bold rounded-xl text-xs py-2.5 transition">Crear Categoría</button>
+                    </div>
+                </div>
+
+                <!-- Add Product Form Section -->
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
+                    <h4 class="font-bold text-slate-900 mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-cart-plus text-brand-600"></i> Agregar Nuevo Producto
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Nombre del Producto</label>
+                            <input type="text" id="prodName" placeholder="Ej. Motocicleta 200cc" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Categoría</label>
+                            <select id="prodCategorySelect" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-600">
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Precio Contado ($)</label>
+                            <input type="number" id="prodPrice" placeholder="1200" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Cuota Mensual Crédito ($)</label>
+                            <input type="number" id="prodMonthly" placeholder="50" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">Etiqueta Destacada</label>
+                            <input type="text" id="prodTag" placeholder="Ej. Nuevo Ingreso" class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-600 mb-1">URL de la Imagen</label>
+                            <input type="text" id="prodImage" placeholder="https://..." class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-600">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-600 mb-1">Descripción Completa</label>
+                        <textarea id="prodDesc" rows="2" placeholder="Detalles técnicos del producto..." class="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-600"></textarea>
+                    </div>
+                    <button onclick="addNewProduct()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs py-3 transition shadow-sm">
+                        Registrar y Publicar Producto en la Tienda
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-4 bg-slate-100 border-t flex justify-between items-center">
+                <span class="text-xs text-slate-500 font-semibold">Sesión activa como Administrador</span>
+                <button onclick="logoutAdmin()" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xs px-4 py-2 rounded-xl transition">
+                    Cerrar Sesión Admin
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Database simulation of products for Almacenes Guerrero
+        let products = [
+            {
+                id: 1,
+                name: "Motocicleta Shineray / Daytona 150cc",
+                category: "motos",
+                price: 1650,
+                monthly: 65,
+                tag: "Más Vendido",
+                image: "https://www.artefacta.com/media/catalog/product/1/5/154739-1_1.png?optimize=medium&bg-color=255,255,255&fit=bounds&height=1040&width=1040&canvas=1040:1040&format=jpeg",
+                desc: "Motor 150cc de alta eficiencia, ideal para trabajo y movilidad en La Maná. Incluye casco y matriculación."
+            },
+            {
+                id: 2,
+                name: "Refrigeradora Indurama 14 Pies No Frost",
+                category: "linea-blanca",
+                price: 680,
+                monthly: 35,
+                tag: "Garantía 3 Años",
+                image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80",
+                desc: "Acero inoxidable, dispensador de agua externa y sistema ahorrador de energía Inverter."
+            },
+            {
+                id: 3,
+                name: "Smart TV LG / Samsung 55\" 4K UHD",
+                category: "tecnologia",
+                price: 540,
+                monthly: 28,
+                tag: "Ocasión Especial",
+                image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?auto=format&fit=crop&w=600&q=80",
+                desc: "Resolución 4K HDR, aplicaciones integradas (Netflix, YouTube, Disney+) y control por voz."
+            },
+            {
+                id: 4,
+                name: "Lavadora Haceb / Mabe 18 Kg Carga Superior",
+                category: "linea-blanca",
+                price: 490,
+                monthly: 25,
+                tag: "Ahorro de Agua",
+                image: "https://images.unsplash.com/photo-1626806787461-102c1bfaaea1?auto=format&fit=crop&w=600&q=80",
+                desc: "Panel digital, tina de acero inoxidable y ciclos de lavado rápido para ropa delicada."
+            },
+            {
+                id: 5,
+                name: "Laptop HP / Asus Core i5 16GB RAM",
+                category: "tecnologia",
+                price: 720,
+                monthly: 38,
+                tag: "Ideal Estudiantes",
+                image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80",
+                desc: "Disco Duro SSD 512GB, pantalla Full HD 15.6 pulgadas, perfecta para estudios y trabajo corporativo."
+            },
+            {
+                id: 6,
+                name: "Cocina Indurama 4 Quemadores con Horno",
+                category: "hogar",
+                price: 320,
+                monthly: 18,
+                tag: "Línea Hogar",
+                image: "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80",
+                desc: "Encendido eléctrico, tablero de acero inoxidable y cristal templado en la tapa."
+            },
+            {
+                id: 7,
+                name:"Parlante JBL PartyBox Stage 120",
+                category: "hogar",
+                price: 550, 
+                monthly: 18,
+                tag: "Línea Hogar",
+                image: "https://pctech.lk/wp-content/uploads/2025/04/PB120-Thumbnail.png",
+                desc: "Haz que cada fiesta sea inolvidable con el Parlante JBL Partybox 120, diseñado para ofrecer 160W de potencia que llenan cualquier espacio con un sonido envolvente y vibrante",
+            }
+        ];
+
+        let categories = [
+            { id: 'all', name: 'Todos los Productos' },
+            { id: 'motos', name: 'Motos y Movilidad' },
+            { id: 'linea-blanca', name: 'Línea Blanca' },
+            { id: 'tecnologia', name: 'Tecnología y TV' },
+            { id: 'hogar', name: 'Hogar' }
+        ];
+
+        let cart = [];
+        let activeCategory = 'all';
+        let isAdminLoggedIn = false;
+
+        // Initialize display on load
+        window.onload = function() {
+            renderCategoriesBar();
+            renderProducts(products);
+            populateSimProducts();
+            populateAdminCategorySelect();
+            updateCartUI();
+        };
+
+        function renderCategoriesBar() {
+            const container = document.getElementById('categoryFilters');
+            container.innerHTML = '';
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                const isActive = activeCategory === cat.id;
+                btn.className = isActive 
+                    ? "category-btn active bg-brand-700 text-white px-3.5 py-1.5 rounded-lg shadow-sm transition"
+                    : "category-btn bg-white hover:bg-slate-200 text-slate-700 px-3.5 py-1.5 rounded-lg border border-slate-200 transition";
+                
+                let iconClass = "fa-solid fa-layer-group";
+                if(cat.id === 'motos') iconClass = "fa-solid fa-motorcycle text-slate-500";
+                if(cat.id === 'linea-blanca') iconClass = "fa-solid fa-snowflake text-slate-500";
+                if(cat.id === 'tecnologia') iconClass = "fa-solid fa-tv text-slate-500";
+                if(cat.id === 'hogar') iconClass = "fa-solid fa-couch text-slate-500";
+
+                btn.setAttribute('onclick', `setCategory('${cat.id}')`);
+                btn.innerHTML = `<i class="${iconClass} mr-1.5"></i>${cat.name}`;
+                container.appendChild(btn);
+            });
+        }
+
+        function renderProducts(items) {
+            const grid = document.getElementById('productGrid');
+            const emptyState = document.getElementById('emptyState');
+            const counter = document.getElementById('productCounter');
+
+            grid.innerHTML = '';
+            
+            if (items.length === 0) {
+                emptyState.classList.remove('hidden');
+                counter.innerText = '0 productos encontrados';
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            counter.innerText = `Mostrando ${items.length} productos`;
+
+            items.forEach(p => {
+                const card = document.createElement('div');
+                card.className = "bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group";
+                
+                let adminDeleteHtml = '';
+                if (isAdminLoggedIn) {
+                    adminDeleteHtml = `
+                        <button onclick="deleteProduct(${p.id})" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
+                            <i class="fa-solid fa-trash-can"></i> Eliminar Producto (Admin)
+                        </button>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div>
+                        <!-- Image Container -->
+                        <div class="relative h-48 sm:h-52 overflow-hidden bg-slate-100">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <span class="absolute top-3 left-3 bg-brand-900/90 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-md backdrop-blur">
+                                ${p.tag}
+                            </span>
+                        </div>
+                        
+                        <!-- Details Container -->
+                        <div class="p-5">
+                            <h3 class="font-bold text-slate-900 text-base leading-snug group-hover:text-brand-700 transition">${p.name}</h3>
+                            <p class="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">${p.desc}</p>
+
+                            <!-- Pricing -->
+                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-baseline justify-between">
+                                <div>
+                                    <span class="text-xs text-slate-400 block font-medium">Precio Contado</span>
+                                    <span class="text-xl font-black text-brand-900">$${p.price.toFixed(2)}</span>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded">Crédito Directo</span>
+                                    <span class="text-xs font-bold text-emerald-700 block mt-0.5">cuotas desde $${p.monthly}/mes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="px-5 pb-5 pt-1 space-y-2">
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="openCreditForProduct(${p.id})" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5 border border-slate-200">
+                                <i class="fa-solid fa-calculator text-brand-600"></i> Simular
+                            </button>
+                            <button onclick="addToCart(${p.id})" class="w-full bg-brand-700 hover:bg-brand-800 text-white font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-cart-plus"></i> Añadir
+                            </button>
+                        </div>
+                        <a href="https://wa.me/593900000000?text=${encodeURIComponent('Hola Almacenes Guerrero, deseo más información sobre: ' + p.name)}" target="_blank" class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-xs py-2 rounded-xl transition flex items-center justify-center gap-1.5 border border-emerald-200 block text-center">
+                            <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i> Consultar Asesoría
+                        </a>
+                        ${adminDeleteHtml}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(p => {
+                const matchesCategory = activeCategory === 'all' || p.category === activeCategory;
+                const matchesSearch = p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query);
+                return matchesCategory && matchesSearch;
+            });
+            renderProducts(filtered);
+        }
+
+        function syncAndFilterMobile(val) {
+            document.getElementById('searchInput').value = val;
+            filterProducts();
+        }
+
+        function setCategory(cat) {
+            activeCategory = cat;
+            renderCategoriesBar();
+            filterProducts();
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('mobileSearchInput').value = '';
+            setCategory('all');
+        }
+
+        function addToCart(id) {
+            const prod = products.find(p => p.id === id);
+            const exist = cart.find(item => item.id === id);
+
+            if (exist) {
+                exist.qty += 1;
+            } else {
+                cart.push({ ...prod, qty: 1 });
+            }
+
+            updateCartUI();
+            toggleCartModal(true);
+        }
+
+        function updateCartQuantity(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.qty += delta;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const cartCount = document.getElementById('cartCount');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const totalEl = document.getElementById('cartTotal');
+
+            const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+            const totalAmount = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            cartCount.innerText = totalItems;
+            subtotalEl.innerText = `$${totalAmount.toFixed(2)}`;
+            totalEl.innerText = `$${totalAmount.toFixed(2)}`;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-slate-400">
+                        <i class="fa-solid fa-cart-flatbed text-4xl mb-2"></i>
+                        <p class="text-xs">Tu carrito está vacío</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            cart.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = "flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl";
+                itemEl.innerHTML = `
+                    <img src="${item.image}" class="w-14 h-14 object-cover rounded-lg border">
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-xs text-slate-800 leading-tight">${item.name}</h4>
+                        <span class="text-xs text-brand-700 font-bold">$${item.price.toFixed(2)}</span>
+                    </div>
+                    <div class="flex items-center border border-slate-300 rounded-lg bg-white overflow-hidden">
+                        <button onclick="updateCartQuantity(${item.id}, -1)" class="px-2 py-0.5 text-slate-600 hover:bg-slate-100 text-xs font-bold">-</button>
+                        <span class="px-2 text-xs font-bold text-slate-800">${item.qty}</span>
+                        <button onclick="updateCartQuantity(${item.id}, 1)" class="px-2 py-0.5 text-slate-600 hover:bg-slate-100 text-xs font-bold">+</button>
+                    </div>
+                `;
+                container.appendChild(itemEl);
+            });
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alert("Tu carrito está vacío. Agrega productos para realizar el pedido.");
+                return;
+            }
+
+            let msg = "*NUEVO PEDIDO DE COMPRA - ALMACENES GUERRERO*\n";
+            msg += "--------------------------------------\n";
+            cart.forEach(i => {
+                msg += `• ${i.qty}x ${i.name} - $${(i.price * i.qty).toFixed(2)}\n`;
+            });
+            const total = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+            msg += "--------------------------------------\n";
+            msg += `*TOTAL ESTIMADO:* $${total.toFixed(2)}\n`;
+            msg += "Ubicación: La Maná / Sectores Aledaños\n";
+            msg += "Deseo coordinar la entrega y facilidades de pago.";
+
+            window.open(`https://wa.me/593900000000?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function populateSimProducts() {
+            const select = document.getElementById('simProductSelect');
+            select.innerHTML = '';
+            products.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p.id;
+                opt.innerText = `${p.name} - ($${p.price})`;
+                select.appendChild(opt);
+            });
+            calculateInstallment();
+        }
+
+        function populateAdminCategorySelect() {
+            const select = document.getElementById('prodCategorySelect');
+            select.innerHTML = '';
+            categories.forEach(c => {
+                if (c.id !== 'all') {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.innerText = c.name;
+                    select.appendChild(opt);
+                }
+            });
+        }
+
+        function openCreditForProduct(prodId) {
+            document.getElementById('simProductSelect').value = prodId;
+            calculateInstallment();
+            toggleCreditModal(true);
+        }
+
+        function calculateInstallment() {
+            const prodId = parseInt(document.getElementById('simProductSelect').value);
+            const downPayment = parseFloat(document.getElementById('simDownPayment').value) || 0;
+            const months = parseInt(document.getElementById('simMonths').value);
+
+            const prod = products.find(p => p.id === prodId);
+            if (!prod) return;
+
+            let balance = prod.price - downPayment;
+            if (balance < 0) balance = 0;
+
+            const interestRate = 0.12;
+            const totalWithInterest = balance * (1 + interestRate);
+            const monthlyPayment = totalWithInterest / months;
+
+            document.getElementById('simMonthlyResult').innerText = `$${monthlyPayment.toFixed(2)} / mes`;
+        }
+
+        function requestCreditViaWhatsApp() {
+            const prodId = parseInt(document.getElementById('simProductSelect').value);
+            const downPayment = parseFloat(document.getElementById('simDownPayment').value) || 0;
+            const months = parseInt(document.getElementById('simMonths').value);
+            const prod = products.find(p => p.id === prodId);
+            const resultText = document.getElementById('simMonthlyResult').innerText;
+
+            let msg = "*SOLICITUD DE CRÉDITO DIRECTO*\n";
+            msg += `Producto: ${prod.name}\n`;
+            msg += `Precio Contado: $${prod.price}\n`;
+            msg += `Entrada Ofrecida: $${downPayment}\n`;
+            msg += `Plazo deseado: ${months} Meses\n`;
+            msg += `Cuota Estimada: ${resultText}\n\n`;
+            msg += "Hola, desearía consultar los requisitos para la aprobación de mi crédito en La Maná.";
+
+            window.open(`https://wa.me/593900000000?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        function toggleCreditModal(forceOpen = false) {
+            const modal = document.getElementById('creditModal');
+            if (forceOpen) modal.classList.remove('hidden');
+            else modal.classList.toggle('hidden');
+        }
+
+        function toggleCartModal(forceOpen = false) {
+            const modal = document.getElementById('cartModal');
+            if (forceOpen) modal.classList.remove('hidden');
+            else modal.classList.toggle('hidden');
+        }
+
+        function toggleExecutiveModal() {
+            const modal = document.getElementById('executiveModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function openAdminLoginModal() {
+            if (isAdminLoggedIn) {
+                toggleAdminDashboard();
+            } else {
+                document.getElementById('adminLoginModal').classList.remove('hidden');
+            }
+        }
+
+        function toggleAdminLoginModal() {
+            document.getElementById('adminLoginModal').classList.toggle('hidden');
+            document.getElementById('loginError').classList.add('hidden');
+            document.getElementById('adminUser').value = '';
+            document.getElementById('adminPass').value = '';
+        }
+
+        function verifyAdminLogin() {
+            const user = document.getElementById('adminUser').value.trim();
+            const pass = document.getElementById('adminPass').value.trim();
+
+            if (user === 'almaguerrero2026' && pass === 'guerrero2026') {
+                isAdminLoggedIn = true;
+                toggleAdminLoginModal();
+                toggleAdminDashboard();
+                filterProducts();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        function toggleAdminDashboard() {
+            document.getElementById('adminDashboardModal').classList.toggle('hidden');
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            toggleAdminDashboard();
+            filterProducts();
+            alert("Has cerrado sesión como administrador correctamente.");
+        }
+
+        function addNewCategory() {
+            const id = document.getElementById('newCatId').value.trim().toLowerCase().replace(/\s+/g, '-');
+            const name = document.getElementById('newCatName').value.trim();
+
+            if (!id || !name) {
+                alert("Por favor completa el ID y el nombre de la categoría.");
+                return;
+            }
+
+            if (categories.some(c => c.id === id)) {
+                alert("Esa categoría ya existe.");
+                return;
+            }
+
+            categories.push({ id, name });
+            renderCategoriesBar();
+            populateAdminCategorySelect();
+            document.getElementById('newCatId').value = '';
+            document.getElementById('newCatName').value = '';
+            alert(`¡Categoría "${name}" creada con éxito!`);
+        }
+
+        function addNewProduct() {
+            const name = document.getElementById('prodName').value.trim();
+            const category = document.getElementById('prodCategorySelect').value;
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const monthly = parseFloat(document.getElementById('prodMonthly').value);
+            const tag = document.getElementById('prodTag').value.trim() || 'Nuevo';
+            const image = document.getElementById('prodImage').value.trim() || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80';
+            const desc = document.getElementById('prodDesc').value.trim() || 'Producto de excelente calidad disponible en Almacenes Guerrero.';
+
+            if (!name || isNaN(price) || isNaN(monthly)) {
+                alert("Por favor completa los campos obligatorios del producto (Nombre, Precio, Cuota).");
+                return;
+            }
+
+            const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+
+            products.unshift({
+                id: newId,
+                name,
+                category,
+                price,
+                monthly,
+                tag,
+                image,
+                desc
+            });
+
+            filterProducts();
+            populateSimProducts();
+            toggleAdminDashboard();
+
+            // Clear form
+            document.getElementById('prodName').value = '';
+            document.getElementById('prodPrice').value = '';
+            document.getElementById('prodMonthly').value = '';
+            document.getElementById('prodTag').value = '';
+            document.getElementById('prodImage').value = '';
+            document.getElementById('prodDesc').value = '';
+
+            alert("¡Producto agregado y publicado exitosamente en el catálogo!");
+        }
+
+        function deleteProduct(id) {
+            if (confirm("¿Estás seguro de eliminar este producto del inventario?")) {
+                products = products.filter(p => p.id !== id);
+                filterProducts();
+                populateSimProducts();
+                alert("Producto eliminado correctamente.");
+            }
+        }
+    </script>
+</body>
+</html>
